@@ -17,7 +17,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=config.allowed_origins,  # Extracted from config
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["POST, GET"],
     allow_headers=["*"],
 )
 
@@ -39,7 +39,7 @@ app.include_router(
     receivables.router,
     tags=["receivables"],
     prefix=config.api_prefix,
-    dependencies=[Depends(get_api_key), Depends(get_db)]
+    dependencies=[Depends(get_api_key)]
     # Including dependencies to be used across all routes in the router
 )
 

@@ -56,7 +56,7 @@ def get_receivables_summary(db: Session, debtor_name: Optional[str] = None, unti
     if debtor_name:
         query = query.filter(Receivable.debtor_name == debtor_name)
     if until_date:
-        query = query.filter(Receivable.issue_date <= until_date)
+        query = query.filter(Receivable.due_date <= until_date)
 
     # Calculating statistics
     total_open_invoices = query.filter(Receivable.closed_date.is_(None)).count()
