@@ -1,0 +1,8 @@
+# These files is used by git to determine which files and directories to ignore, and not to track.
+.idea/
+.vscode/
+.env
+venv/
+__pycache__/
+*.db
+
