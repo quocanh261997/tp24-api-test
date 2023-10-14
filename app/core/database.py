@@ -6,7 +6,7 @@ from app.core.config import config_instance
 
 # Create a SQLAlchemy engine
 # echo=True will make SQLAlchemy log SQL queries, which can be useful for debugging
-engine = create_engine(config_instance.database_url, echo=True, future=True)
+engine = create_engine(config_instance.database_url, echo=True, connect_args={"check_same_thread": False})
 
 # SessionLocal will be our factory for creating database sessions
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

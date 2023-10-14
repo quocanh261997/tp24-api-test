@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, status, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.deps import get_api_key
+from app.api.deps import get_api_key, get_db
 from app.models import receivables as models
 from app.core.database import engine
 # Importing routers
@@ -11,13 +11,13 @@ from app.core.config import config_instance as config
 # Database configurations and session
 from app.core import database
 
-app = FastAPI(debug=True)
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.allowed_origins,  # Extracted from config
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["POST, GET"],
     allow_headers=["*"],
 )
 
@@ -57,7 +57,8 @@ async def shutdown_event():
     """
     Dispose of the database engine on application shutdown
     """
-    await engine.dispose()
+    if engine:
+        await engine.dispose()
 
 
 # Root endpoint for health check

@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.post("/receivables", response_model=List[ReceivableCreate], status_code=201)
-async def create_receivable(
+def create_receivable(
         receivables: List[ReceivableCreate],
         db: Session = Depends(deps.get_db),
 ):
@@ -26,15 +26,14 @@ async def create_receivable(
 
 
 @router.get("/receivables/summary", response_model=ReceivableSummary, status_code=200)
-async def get_receivable_summary(
+def get_receivable_summary(
         debtor_name: Annotated[str, Query(alias="debtorName")] = None,
         until_date: Annotated[date, Query(alias="untilDate")] = None,
-        db: Session = Depends(deps.get_db),
+        db: Session = Depends(deps.get_db)
 ):
     """
     API Endpoint to fetch summary statistics of receivables.
     Allows optional filtering by debtor name and until a certain issue date.
     """
-    print(debtor_name, until_date)
     receivable_summary = crud.get_receivables_summary(db, debtor_name, until_date)
     return receivable_summary

@@ -1,7 +1,12 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import Request, HTTPException, Header
 from typing_extensions import Annotated
 
 from app.core.config import config_instance
+
+load_dotenv()
 
 
 # Dependency to extract the DB session
